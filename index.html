@@ -1,9 +1,19 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0F0E0C">
+<meta name="description" content="Veni Vidi Vici: roupas e tênis para quem chega preparado. Coleção I · Veni.">
+<link rel="icon" href="assets/logos/png/vvv-monograma-dourado.png">
 <title>Site Veni Vidi Vici</title>
-<meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap">
 <style>
+:root { padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
+body { margin: 0; }
+img { max-width: 100%; }
 /* Layout: uma marcha em três atos (Veni, Vidi, Vici). Faixas inteiras alternando preto e branco, conteúdo em coluna central de 1180px. */
 :root {
   --preto: #0F0E0C;
@@ -273,7 +283,91 @@ p { margin: 0; }
   .form { flex-direction: column; }
   .form .botao { width: 100%; }
 }
+
+/* ===== Celular ===== */
+section[id], main[id] { scroll-margin-top: 72px; }
+html { -webkit-text-size-adjust: 100%; }
+button, a { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
+.abre-menu { display: none; }
+.gaveta, .barra-compra, .dica { display: none; }
+@media (max-width: 960px) {
+  .topo .dentro { display: grid; grid-template-columns: 44px 1fr auto; gap: 12px; padding-block: 10px; }
+  .abre-menu { display: grid; align-content: center; gap: 7px; width: 44px; height: 44px; background: none; border: 0; padding: 10px 8px; cursor: pointer; }
+  .abre-menu span { display: block; height: 1px; background: var(--branco); transition: transform .25s; }
+  .abre-menu[aria-expanded="true"] span:first-child { transform: translateY(4px) rotate(45deg); }
+  .abre-menu[aria-expanded="true"] span:last-child { transform: translateY(-4px) rotate(-45deg); }
+  .topo nav { display: none; }
+  .marca { justify-self: center; }
+  .gaveta { display: flex; position: fixed; z-index: 15; inset: 0; background: var(--preto); flex-direction: column; justify-content: space-between; padding: calc(env(safe-area-inset-top, 0px) + 96px) max(28px, env(safe-area-inset-right, 0px)) calc(env(safe-area-inset-bottom, 0px) + 36px) max(28px, env(safe-area-inset-left, 0px)); animation: abrir .3s ease-out; }
+  .gaveta nav { display: grid; gap: 4px; }
+  .gaveta a { font-family: var(--f-titulo); font-size: 30px; letter-spacing: .06em; text-decoration: none; padding-block: 10px; border-bottom: 1px solid var(--linha-escura); }
+  .gaveta a:active { color: var(--dourado); }
+  .gaveta-lema { font-family: var(--f-titulo); font-size: 12px; letter-spacing: .3em; text-transform: uppercase; color: var(--dourado); }
+  @keyframes abrir { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: none; } }
+}
+@media (max-width: 720px) {
+  .aviso { font-size: 10px; letter-spacing: .14em; padding-block: 7px; }
+  .sacola { padding: 9px 12px; font-size: 11px; }
+
+  /* Abertura */
+  .abertura .dentro { padding-block: 28px 56px; gap: 24px; }
+  .coroa-grande { width: 58%; }
+  .abertura h1 { font-size: clamp(54px, 17vw, 72px); }
+  .abertura .latim { font-size: 21px; margin-top: 12px; }
+  .abertura .apoio { font-size: 20px; margin-top: 20px; }
+  .acoes { flex-direction: column; gap: 10px; margin-top: 28px; }
+  .acoes .botao { text-align: center; padding-block: 17px; }
+
+  /* Cabeçalhos de seção */
+  .cabeca { margin-bottom: 28px; gap: 12px; }
+  .cabeca p { font-size: 18px; }
+
+  /* Vitrines de deslizar */
+  .vitrine .grade, .sugestoes .grade, .trio {
+    display: grid; grid-auto-flow: column; grid-template-columns: none; grid-auto-columns: 74%;
+    gap: 14px; overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory;
+    margin-inline: calc(-1 * max(16px, env(safe-area-inset-left, 0px)));
+    padding-inline: max(16px, env(safe-area-inset-left, 0px));
+    scroll-padding-inline: max(16px, env(safe-area-inset-left, 0px));
+    scrollbar-width: none; -webkit-overflow-scrolling: touch;
+  }
+  .vitrine .grade::-webkit-scrollbar, .sugestoes .grade::-webkit-scrollbar, .trio::-webkit-scrollbar { display: none; }
+  .vitrine .grade > *, .sugestoes .grade > *, .trio > * { scroll-snap-align: start; }
+  .peca .linha1 { flex-direction: row; gap: 12px; }
+  .peca h3 { font-size: 15px; }
+  .dica { display: block; font-style: italic; font-size: 16px; color: rgba(15,14,12,.6); margin-top: 16px; }
+  .filtros { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; margin-bottom: 20px; }
+  .filtro { padding: 12px 18px; white-space: nowrap; }
+  .cor { width: 28px; height: 28px; }
+  .cores { gap: 12px; }
+  .add { padding: 13px 14px; }
+
+  /* Edição Vici */
+  .trio { background: none; border: 0; grid-auto-columns: 78%; gap: 12px; }
+  .trio li { border: 1px solid var(--linha-escura); }
+
+  /* Lista de espera */
+  .form input { font-size: 18px; padding: 16px; }
+
+  /* Sacola: barra fixa com total e botão */
+  .tela-sacola .dentro { padding-block: 32px 56px; }
+  .passos { gap: 8px 18px; font-size: 10px; }
+  .barra-compra { display: flex; position: fixed; z-index: 30; left: 0; right: 0; bottom: 0; align-items: center; justify-content: space-between; gap: 14px; background: var(--preto); color: var(--branco); border-top: 1px solid var(--dourado); padding: 12px max(16px, env(safe-area-inset-right, 0px)) calc(12px + env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px)); transition: transform .25s; }
+  .barra-compra.fora { transform: translateY(110%); }
+  .barra-compra small { display: block; font-family: var(--f-titulo); font-size: 10px; letter-spacing: .2em; text-transform: uppercase; color: rgba(255,255,255,.6); }
+  .barra-compra strong { font-weight: 500; font-size: 22px; color: var(--dourado); font-variant-numeric: tabular-nums lining-nums; }
+  .barra-compra .botao { padding: 14px 18px; }
+  body.na-sacola { padding-bottom: 84px; }
+  .resumo { padding: 26px 20px; }
+  .item { padding-block: 20px; }
+  .opcoes select { font-size: 18px; padding: 8px 10px; }
+  .qtd button { width: 42px; height: 42px; }
+  .remover { padding: 8px 0; }
+}
 </style>
+</head>
+<body>
+
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <defs>
@@ -289,6 +383,7 @@ p { margin: 0; }
 
 <header class="topo faixa">
   <div class="dentro">
+    <button class="abre-menu" id="abre-menu" type="button" aria-expanded="false" aria-controls="gaveta" aria-label="Abrir menu"><span></span><span></span></button>
     <a class="marca" href="#inicio" aria-label="Veni Vidi Vici, início">
       <svg class="ico" aria-hidden="true"><use href="#mono"/></svg>
       <span>VVV</span>
@@ -304,6 +399,18 @@ p { margin: 0; }
     <a class="sacola" id="sacola" href="#sacola" style="text-decoration:none">Sacola <b id="qtd">0</b></a>
   </div>
 </header>
+
+<div class="gaveta" id="gaveta" hidden>
+  <nav aria-label="Menu do celular">
+    <a href="#inicio">Início</a>
+    <a href="#colecao">Coleção I</a>
+    <a href="#vitrine">Loja</a>
+    <a href="#vici">Edição Vici</a>
+    <a href="#marca">A marca</a>
+    <a href="#sacola">Sacola</a>
+  </nav>
+  <p class="gaveta-lema">Veni Vidi Vici</p>
+</div>
 
 <main id="inicio">
   <section class="abertura faixa" aria-labelledby="titulo">
@@ -374,6 +481,7 @@ p { margin: 0; }
         <button class="filtro" type="button" data-f="tenis" aria-pressed="false">Tênis</button>
       </div>
       <div class="grade" id="grade"></div>
+      <p class="dica">Deslize para ver mais peças →</p>
     </div>
   </section>
 
@@ -489,6 +597,11 @@ p { margin: 0; }
     </div>
   </div>
 </section>
+
+<div class="barra-compra" id="barra-compra" hidden>
+  <div><small>Total</small><strong id="barra-total"></strong></div>
+  <button class="botao cheio" type="button" id="barra-finalizar">Finalizar compra</button>
+</div>
 
 <div class="toast" id="toast" role="status" aria-live="polite"><span id="toast-texto"></span><a href="#sacola">Ver sacola</a></div>
 
@@ -606,6 +719,7 @@ function render() {
   $("sacola-sub").textContent = n ? `${n} ${n === 1 ? "peça" : "peças"} da Coleção I · Veni` : "";
   $("sacola-cheia").hidden = !n;
   $("sacola-vazia").hidden = !!n;
+  $("barra-compra").hidden = !n || location.hash !== "#sacola";
 
   const ul = $("itens"); ul.innerHTML = "";
   estado.itens.forEach((it, k) => {
@@ -642,6 +756,7 @@ function render() {
   $("r-desc").textContent = c.desc ? "− " + brl(c.desc) : "—";
   $("r-frete").textContent = c.frete === 0 ? "Grátis" : c.frete == null ? "Informe o CEP" : brl(c.frete);
   $("r-total").textContent = brl(c.total);
+  $("barra-total").textContent = brl(c.total);
   $("r-parcela").textContent = `ou ${PARCELAS}x de ${brl(Math.round(c.total / PARCELAS * 100) / 100)} sem juros`;
   const falta = FRETE_GRATIS - c.base;
   $("frete-texto").textContent = falta > 0 ? `Faltam ${brl(falta)} para o frete grátis.` : "Seu pedido tem frete grátis.";
@@ -687,11 +802,38 @@ function rota() {
   const naSacola = h === "sacola";
   telaInicial.hidden = naSacola;
   telaSacola.hidden = !naSacola;
+  document.body.classList.toggle("na-sacola", naSacola);
+  $("barra-compra").hidden = !naSacola || !estado.itens.length;
+  fecharMenu();
   $("toast").classList.remove("on");
   if (naSacola) { window.scrollTo(0, 0); $("nota").textContent = ""; }
+  else if (h === "inicio") { window.scrollTo(0, 0); }
   else if (h) { const alvo = document.getElementById(h); if (alvo) alvo.scrollIntoView(); }
 }
 window.addEventListener("hashchange", rota);
+
+// Menu do celular
+const botaoMenu = $("abre-menu"), gaveta = $("gaveta");
+function fecharMenu() { gaveta.hidden = true; botaoMenu.setAttribute("aria-expanded", "false"); botaoMenu.setAttribute("aria-label", "Abrir menu"); document.body.style.overflow = ""; }
+botaoMenu.addEventListener("click", () => {
+  const abrir = gaveta.hidden;
+  if (!abrir) return fecharMenu();
+  gaveta.hidden = false; botaoMenu.setAttribute("aria-expanded", "true"); botaoMenu.setAttribute("aria-label", "Fechar menu"); document.body.style.overflow = "hidden";
+});
+gaveta.querySelectorAll("a").forEach(a => a.addEventListener("click", fecharMenu));
+document.addEventListener("keydown", e => { if (e.key === "Escape") fecharMenu(); });
+
+// Barra fixa da sacola some quando o resumo aparece na tela
+if ("IntersectionObserver" in window) {
+  new IntersectionObserver(([e]) => $("barra-compra").classList.toggle("fora", e.isIntersecting), { threshold: 0.25 }).observe(document.querySelector(".resumo"));
+}
+$("barra-finalizar").addEventListener("click", () => {
+  document.querySelector(".resumo").scrollIntoView({ behavior: "smooth", block: "start" });
+  $("finalizar").click();
+});
 render(); rota();
 
 </script>
+
+</body>
+</html>
