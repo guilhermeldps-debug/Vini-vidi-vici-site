@@ -1,0 +1,697 @@
+<title>Site Veni Vidi Vici</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap">
+<style>
+/* Layout: uma marcha em três atos (Veni, Vidi, Vici). Faixas inteiras alternando preto e branco, conteúdo em coluna central de 1180px. */
+:root {
+  --preto: #0F0E0C;
+  --preto-2: #1A1915;
+  --dourado: #C69F5B;
+  --dourado-claro: #E6C26C;
+  --branco: #FFFFFF;
+  --areia: #E4D9C4;
+  --pedra: #6E6A62;
+  --linha-escura: rgba(198,159,91,.28);
+  --linha-clara: rgba(15,14,12,.14);
+  --f-titulo: "Cinzel", "Trajan Pro", "Times New Roman", serif;
+  --f-texto: "Cormorant Garamond", "Garamond", "Georgia", serif;
+  --largura: 1180px;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { animation: none !important; transition: none !important; } }
+body { background: var(--preto); color: var(--branco); font-family: var(--f-texto); font-size: 19px; line-height: 1.55; -webkit-font-smoothing: antialiased; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--preto); }
+a { color: inherit; }
+:focus-visible { outline: 1px solid var(--dourado); outline-offset: 4px; }
+.faixa { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.dentro { max-width: var(--largura); margin: 0 auto; }
+.clara { background: var(--branco); color: var(--preto); }
+.areia { background: var(--areia); color: var(--preto); }
+.rotulo { font-family: var(--f-titulo); font-size: 12px; letter-spacing: .28em; text-transform: uppercase; font-weight: 500; }
+h1, h2, h3 { font-family: var(--f-titulo); font-weight: 400; text-wrap: balance; margin: 0; letter-spacing: .04em; }
+p { margin: 0; }
+.ico { display: block; }
+
+/* Aviso de protótipo */
+.aviso { background: var(--dourado); color: var(--preto); text-align: center; font-family: var(--f-titulo); font-size: 11px; letter-spacing: .2em; text-transform: uppercase; padding-block: 8px; }
+
+/* Cabeçalho */
+.topo { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: rgba(15,14,12,.94); backdrop-filter: blur(8px); border-bottom: 1px solid var(--linha-escura); }
+.topo .dentro { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding-block: 14px; }
+.marca { display: flex; align-items: center; gap: 12px; text-decoration: none; color: var(--dourado); }
+.marca svg { width: 30px; height: 30px; }
+.marca span { font-family: var(--f-titulo); font-size: 15px; letter-spacing: .3em; color: var(--branco); }
+.menu { display: flex; gap: 32px; list-style: none; margin: 0; padding: 0; }
+.menu a { font-family: var(--f-titulo); font-size: 12px; letter-spacing: .24em; text-transform: uppercase; text-decoration: none; color: rgba(255,255,255,.78); transition: color .2s; }
+.menu a:hover { color: var(--dourado); }
+.sacola { font-family: var(--f-titulo); font-size: 12px; letter-spacing: .2em; text-transform: uppercase; background: none; border: 1px solid var(--linha-escura); color: var(--branco); padding: 9px 14px; cursor: pointer; white-space: nowrap; }
+.sacola b { color: var(--dourado); font-weight: 500; }
+
+/* Abertura */
+.abertura { position: relative; overflow: hidden; border-bottom: 1px solid var(--linha-escura); }
+.abertura .dentro { display: grid; grid-template-columns: 1.05fr .95fr; align-items: center; gap: 48px; padding-block: 88px 96px; }
+.abertura h1 { font-size: clamp(44px, 7.4vw, 96px); line-height: 1.02; letter-spacing: .02em; }
+.abertura h1 span { display: block; }
+.abertura h1 span:nth-child(3) { color: var(--dourado); }
+.abertura .latim { font-style: italic; font-size: 22px; color: rgba(255,255,255,.62); margin-top: 18px; }
+.abertura .apoio { font-size: 22px; max-width: 30ch; margin-top: 28px; color: rgba(255,255,255,.88); }
+.acoes { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 36px; }
+.botao { display: inline-block; font-family: var(--f-titulo); font-size: 12px; letter-spacing: .26em; text-transform: uppercase; text-decoration: none; padding: 16px 26px; border: 1px solid var(--dourado); transition: background .2s, color .2s; cursor: pointer; }
+.botao.cheio { background: var(--dourado); color: var(--preto); }
+.botao.cheio:hover { background: var(--dourado-claro); border-color: var(--dourado-claro); }
+.botao.vazio { color: var(--branco); background: transparent; }
+.botao.vazio:hover { background: rgba(198,159,91,.12); }
+.coroa-grande { color: var(--dourado); justify-self: center; width: min(100%, 460px); }
+.coroa-grande svg { width: 100%; height: auto; }
+.coroa-grande .ico { animation: surgir 1.6s ease-out both; }
+@keyframes surgir { from { opacity: .35; transform: scale(.97); } to { opacity: 1; transform: none; } }
+
+/* Três atos */
+.atos .dentro { padding-block: 96px; }
+.cabeca { display: flex; justify-content: space-between; align-items: end; gap: 24px; flex-wrap: wrap; margin-bottom: 48px; }
+.cabeca h2 { font-size: clamp(30px, 4vw, 46px); }
+.cabeca p { max-width: 42ch; font-size: 20px; color: var(--pedra); }
+.lista-atos { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--linha-clara); }
+.ato { padding: 36px 32px 8px 0; display: grid; gap: 12px; align-content: start; }
+.ato + .ato { padding-left: 32px; border-left: 1px solid var(--linha-clara); }
+.ato .num { font-family: var(--f-titulo); font-size: 15px; letter-spacing: .3em; color: var(--dourado); }
+.ato h3 { font-size: 34px; letter-spacing: .08em; }
+.ato .trad { font-style: italic; font-size: 20px; color: var(--pedra); }
+.ato p.desc { font-size: 19px; }
+.ato .estado { font-family: var(--f-titulo); font-size: 11px; letter-spacing: .24em; text-transform: uppercase; margin-top: 8px; color: var(--pedra); }
+.ato.atual .estado { color: var(--preto); }
+.ato.atual .estado::before { content: ""; display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--dourado); margin-right: 10px; vertical-align: 1px; }
+
+/* Vitrine */
+.vitrine .dentro { padding-block: 96px; }
+.vitrine .cabeca p { color: rgba(15,14,12,.7); }
+.filtros { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 32px; }
+.filtro { font-family: var(--f-titulo); font-size: 11px; letter-spacing: .22em; text-transform: uppercase; padding: 10px 16px; background: transparent; border: 1px solid rgba(15,14,12,.3); color: var(--preto); cursor: pointer; }
+.filtro[aria-pressed="true"] { background: var(--preto); color: var(--branco); border-color: var(--preto); }
+.grade { display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px 24px; }
+.peca { display: grid; gap: 12px; align-content: start; min-width: 0; }
+.foto { position: relative; aspect-ratio: 4 / 5; max-width: 100%; display: grid; place-items: center; transition: background .35s; overflow: hidden; }
+.foto .silh { width: 62%; height: auto; }
+.foto .selo { position: absolute; left: 14px; bottom: 12px; font-family: var(--f-titulo); font-size: 10px; letter-spacing: .22em; text-transform: uppercase; opacity: .55; }
+.foto .vici { position: absolute; right: 12px; top: 12px; font-family: var(--f-titulo); font-size: 10px; letter-spacing: .2em; text-transform: uppercase; background: var(--preto); color: var(--dourado); padding: 6px 9px; border: 1px solid var(--dourado); }
+.foto[data-cor="preto"] { background: #1B1A17; color: #34322D; }
+.foto[data-cor="branco"] { background: #F3F1EC; color: #DAD5CB; }
+.foto[data-cor="areia"] { background: #D9CCB2; color: #C2B393; }
+.foto[data-cor="cinza"] { background: #3A3936; color: #55534E; }
+.foto .marca-peca { position: absolute; color: var(--dourado); width: 9%; }
+.foto[data-cor="branco"] .marca-peca, .foto[data-cor="areia"] .marca-peca { color: #8C8471; }
+.foto.dourada .marca-peca { color: var(--dourado) !important; }
+.peca .linha1 { display: flex; justify-content: space-between; gap: 12px; align-items: baseline; }
+.peca h3 { font-size: 17px; letter-spacing: .16em; text-transform: uppercase; }
+.preco { font-variant-numeric: tabular-nums lining-nums; font-size: 19px; font-weight: 500; white-space: nowrap; }
+.peca .tipo { font-style: italic; font-size: 18px; color: rgba(15,14,12,.68); margin-top: -6px; }
+.cores { display: flex; gap: 8px; }
+.cor { width: 18px; height: 18px; border-radius: 50%; border: 1px solid rgba(15,14,12,.35); padding: 0; cursor: pointer; position: relative; }
+.cor[aria-pressed="true"]::after { content: ""; position: absolute; inset: -5px; border-radius: 50%; border: 1px solid var(--preto); }
+.cor[data-c="preto"] { background: var(--preto); }
+.cor[data-c="branco"] { background: var(--branco); }
+.cor[data-c="areia"] { background: #D9CCB2; }
+.cor[data-c="cinza"] { background: #3A3936; }
+
+/* Edição Vici */
+.edicao { border-block: 1px solid var(--linha-escura); }
+.edicao .dentro { display: grid; grid-template-columns: .9fr 1.1fr; gap: 64px; align-items: center; padding-block: 104px; }
+.edicao .rotulo { color: var(--dourado); }
+.edicao h2 { font-size: clamp(34px, 4.6vw, 58px); margin-top: 18px; line-height: 1.08; }
+.edicao h2 em { font-style: normal; color: var(--dourado); }
+.edicao .texto p { font-size: 21px; color: rgba(255,255,255,.8); margin-top: 22px; max-width: 40ch; }
+.trio { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--linha-escura); border: 1px solid var(--linha-escura); }
+.trio li { list-style: none; background: var(--preto); padding: 28px 22px; display: grid; gap: 8px; align-content: start; min-width: 0; }
+.trio { margin: 0; padding: 0; }
+.trio .mono { color: var(--dourado); width: 34px; height: 34px; margin-bottom: 14px; }
+.trio h3 { font-size: 18px; letter-spacing: .16em; text-transform: uppercase; }
+.trio p { font-size: 17px; color: rgba(255,255,255,.66); }
+.trio .preco { color: var(--dourado); margin-top: 6px; }
+
+/* Manifesto */
+.manifesto .dentro { padding-block: 112px; display: grid; justify-items: center; text-align: center; gap: 28px; }
+.manifesto .mono { width: 46px; height: 46px; color: var(--dourado); }
+.manifesto blockquote { margin: 0; font-family: var(--f-texto); font-style: italic; font-size: clamp(28px, 3.6vw, 42px); line-height: 1.3; max-width: 26ch; text-wrap: balance; }
+.manifesto .assina { font-size: 20px; max-width: 52ch; color: var(--pedra); }
+.principios { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 32px; width: 100%; max-width: 900px; border-top: 1px solid var(--linha-clara); padding-top: 32px; }
+.principios div { display: grid; gap: 6px; }
+.principios strong { font-family: var(--f-titulo); font-weight: 500; font-size: 13px; letter-spacing: .24em; text-transform: uppercase; }
+.principios span { font-size: 18px; color: var(--pedra); }
+
+/* Lista de espera */
+.espera .dentro { padding-block: 96px; display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
+.espera h2 { font-size: clamp(30px, 3.8vw, 44px); }
+.espera p { font-size: 20px; color: rgba(255,255,255,.72); margin-top: 16px; max-width: 38ch; }
+.form { display: flex; gap: 0; border: 1px solid var(--dourado); }
+.form label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+.form input { flex: 1; min-width: 0; background: transparent; border: 0; color: var(--branco); font-family: var(--f-texto); font-size: 20px; padding: 16px 18px; }
+.form input::placeholder { color: rgba(255,255,255,.45); }
+.form input:focus { outline: none; background: rgba(198,159,91,.08); }
+.form .botao { border: 0; }
+.retorno { font-style: italic; font-size: 18px; color: var(--dourado); margin-top: 14px; min-height: 1.5em; }
+
+/* Rodapé */
+.rodape { border-top: 1px solid var(--linha-escura); }
+.rodape .dentro { padding-block: 64px 40px; display: grid; gap: 40px; }
+.rodape .tipo-logo { color: var(--dourado); width: min(100%, 420px); }
+.rodape .tipo-logo svg { width: 100%; height: auto; }
+.colunas { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+.colunas h4 { font-family: var(--f-titulo); font-weight: 500; font-size: 12px; letter-spacing: .24em; text-transform: uppercase; color: var(--dourado); margin: 0 0 12px; }
+.colunas ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; font-size: 18px; color: rgba(255,255,255,.7); }
+.colunas a { text-decoration: none; }
+.colunas a:hover { color: var(--branco); }
+.base { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; font-size: 16px; color: rgba(255,255,255,.45); border-top: 1px solid var(--linha-escura); padding-top: 24px; }
+
+/* Botão de adicionar nas peças */
+.add { font-family: var(--f-titulo); font-size: 11px; letter-spacing: .22em; text-transform: uppercase; background: transparent; color: var(--preto); border: 1px solid rgba(15,14,12,.35); padding: 11px 12px; cursor: pointer; transition: background .2s, color .2s; }
+.add:hover { background: var(--preto); color: var(--branco); }
+.peca .rodape-peca { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+
+/* Aviso flutuante */
+.toast { position: fixed; z-index: 40; right: max(16px, env(safe-area-inset-right, 0px)); bottom: calc(16px + env(safe-area-inset-bottom, 0px)); background: var(--preto); color: var(--branco); border: 1px solid var(--dourado); padding: 14px 18px; display: flex; gap: 18px; align-items: center; font-size: 18px; max-width: calc(100% - 32px); transform: translateY(16px); opacity: 0; pointer-events: none; transition: opacity .25s, transform .25s; }
+.toast.on { opacity: 1; transform: none; pointer-events: auto; }
+.toast a { font-family: var(--f-titulo); font-size: 11px; letter-spacing: .22em; text-transform: uppercase; color: var(--dourado); white-space: nowrap; }
+
+/* Tela da sacola */
+.tela-sacola { background: var(--branco); color: var(--preto); min-height: 70vh; }
+.tela-sacola .dentro { padding-block: 64px 96px; }
+.voltar { font-family: var(--f-titulo); font-size: 11px; letter-spacing: .22em; text-transform: uppercase; text-decoration: none; color: var(--pedra); }
+.voltar:hover { color: var(--preto); }
+.tela-sacola h1 { font-size: clamp(34px, 4.4vw, 52px); margin-top: 18px; }
+.tela-sacola .sub { font-style: italic; font-size: 20px; color: var(--pedra); margin-top: 6px; }
+.passos { display: flex; gap: 10px 28px; flex-wrap: wrap; list-style: none; margin: 28px 0 0; padding: 0; font-family: var(--f-titulo); font-size: 11px; letter-spacing: .22em; text-transform: uppercase; color: var(--pedra); }
+.passos li.agora { color: var(--preto); }
+.passos li.agora::before { content: ""; display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--dourado); margin-right: 10px; vertical-align: 1px; }
+.sacola-grade { display: grid; grid-template-columns: minmax(0, 1fr) 380px; gap: 56px; align-items: start; margin-top: 40px; }
+.itens { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--linha-clara); }
+.item { display: grid; grid-template-columns: 120px minmax(0, 1fr) auto; gap: 24px; padding-block: 24px; border-bottom: 1px solid var(--linha-clara); align-items: start; }
+.item .foto { width: 120px; }
+.item .foto .selo { display: none; }
+.item h3 { font-size: 17px; letter-spacing: .16em; text-transform: uppercase; }
+.item .tipo { font-style: italic; font-size: 18px; color: rgba(15,14,12,.68); }
+.item .info { display: grid; gap: 10px; min-width: 0; }
+.opcoes { display: flex; flex-wrap: wrap; gap: 10px 18px; align-items: center; margin-top: 4px; }
+.opcoes label { font-family: var(--f-titulo); font-size: 10px; letter-spacing: .2em; text-transform: uppercase; color: var(--pedra); display: flex; gap: 8px; align-items: center; }
+.opcoes select { font-family: var(--f-texto); font-size: 17px; border: 1px solid rgba(15,14,12,.3); background: var(--branco); color: var(--preto); padding: 4px 8px; }
+.qtd { display: inline-flex; border: 1px solid rgba(15,14,12,.3); }
+.qtd button { width: 34px; height: 34px; background: transparent; border: 0; font-size: 18px; cursor: pointer; color: var(--preto); }
+.qtd button:disabled { opacity: .3; cursor: default; }
+.qtd output { min-width: 30px; display: grid; place-items: center; font-variant-numeric: tabular-nums; font-size: 18px; }
+.item .lado { display: grid; justify-items: end; gap: 10px; }
+.remover { background: none; border: 0; padding: 0; font-family: var(--f-texto); font-size: 16px; color: var(--pedra); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+.remover:hover { color: var(--preto); }
+.marca-vici { font-family: var(--f-titulo); font-size: 10px; letter-spacing: .2em; text-transform: uppercase; color: var(--dourado); }
+.resumo { grid-template-columns: minmax(0, 1fr); min-width: 0; background: var(--preto); color: var(--branco); padding: 32px 28px; display: grid; gap: 18px; position: sticky; top: calc(env(safe-area-inset-top, 0px) + 84px); }
+.resumo h2 { font-size: 15px; letter-spacing: .26em; text-transform: uppercase; color: var(--dourado); }
+.resumo dl { margin: 0; display: grid; gap: 10px; }
+.resumo dl div { display: flex; justify-content: space-between; gap: 12px; font-size: 19px; }
+.resumo dt { color: rgba(255,255,255,.72); }
+.resumo dd { margin: 0; font-variant-numeric: tabular-nums lining-nums; }
+.resumo .total { border-top: 1px solid var(--linha-escura); padding-top: 14px; }
+.resumo .total dt { color: var(--branco); font-family: var(--f-titulo); font-size: 14px; letter-spacing: .2em; text-transform: uppercase; align-self: center; }
+.resumo .total dd { font-size: 26px; color: var(--dourado); }
+.resumo .parcela { font-style: italic; font-size: 17px; color: rgba(255,255,255,.62); margin-top: -8px; text-align: right; }
+.barra-frete { display: grid; gap: 8px; font-size: 17px; color: rgba(255,255,255,.8); }
+.barra-frete .trilho { height: 3px; background: rgba(198,159,91,.22); }
+.barra-frete .cheio { height: 100%; background: var(--dourado); transition: width .3s; }
+.campo { display: flex; border: 1px solid var(--linha-escura); }
+.campo input { flex: 1; min-width: 0; width: 100%; background: transparent; border: 0; color: var(--branco); font-family: var(--f-texto); font-size: 18px; padding: 11px 12px; }
+.campo input::placeholder { color: rgba(255,255,255,.42); }
+.campo input:focus { outline: none; background: rgba(198,159,91,.08); }
+.campo button { background: transparent; color: var(--dourado); border: 0; border-left: 1px solid var(--linha-escura); font-family: var(--f-titulo); font-size: 11px; letter-spacing: .2em; text-transform: uppercase; padding: 0 14px; cursor: pointer; }
+.nota { font-size: 16px; font-style: italic; color: var(--dourado); min-height: 1.2em; }
+.resumo .botao { text-align: center; width: 100%; }
+.resumo .seguro { font-size: 15px; color: rgba(255,255,255,.5); text-align: center; }
+.vazia { text-align: center; padding-block: 72px; display: grid; justify-items: center; gap: 18px; border-top: 1px solid var(--linha-clara); }
+.vazia .mono { width: 44px; height: 44px; color: var(--dourado); }
+.vazia p { font-size: 22px; font-style: italic; color: var(--pedra); }
+.vazia .botao { color: var(--preto); }
+.sugestoes { margin-top: 72px; }
+.sugestoes h2 { font-size: 22px; letter-spacing: .1em; margin-bottom: 24px; }
+.sugestoes .grade { grid-template-columns: repeat(4, 1fr); }
+
+@media (max-width: 960px) {
+  .sacola-grade { grid-template-columns: 1fr; gap: 40px; }
+  .resumo { position: static; }
+  .sugestoes .grade { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 560px) {
+  .item { grid-template-columns: 88px minmax(0, 1fr); gap: 16px; }
+  .item .foto { width: 88px; }
+  .item .lado { grid-column: 2; justify-items: start; grid-auto-flow: column; justify-content: space-between; align-items: center; }
+  .toast { left: max(16px, env(safe-area-inset-left, 0px)); justify-content: space-between; }
+}
+
+@media (max-width: 960px) {
+  .menu { display: none; }
+  .abertura .dentro { grid-template-columns: 1fr; padding-block: 56px 64px; gap: 40px; }
+  .coroa-grande { width: min(72%, 340px); order: -1; }
+  .grade { grid-template-columns: repeat(2, 1fr); }
+  .edicao .dentro, .espera .dentro { grid-template-columns: 1fr; gap: 40px; }
+  .colunas { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 720px) {
+  .lista-atos { grid-template-columns: 1fr; }
+  .ato, .ato + .ato { padding: 28px 0; border-left: 0; border-bottom: 1px solid var(--linha-clara); }
+  .trio { grid-template-columns: 1fr; }
+  .principios { grid-template-columns: 1fr; text-align: center; }
+  .atos .dentro, .vitrine .dentro, .espera .dentro { padding-block: 64px; }
+  .edicao .dentro, .manifesto .dentro { padding-block: 72px; }
+}
+@media (max-width: 480px) {
+  body { font-size: 18px; }
+  .marca span { display: none; }
+  .grade { gap: 28px 14px; }
+  .peca h3 { font-size: 14px; letter-spacing: .12em; }
+  .preco { font-size: 17px; }
+  .peca .linha1 { flex-direction: column; gap: 2px; }
+  .form { flex-direction: column; }
+  .form .botao { width: 100%; }
+}
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="mono" viewBox="90 100 820 810"><path d="M360.0 190.0 L408.0 190.0 L516.0 426.5 L624.0 190.0 L640.0 190.0 L503.0 490.0 L497.0 490.0ZM338.4 190.0h91.2v14.4h-91.2ZM598.1 190.0h67.8v14.4h-67.8ZM182.0 520.0 L230.0 520.0 L338.0 756.5 L446.0 520.0 L462.0 520.0 L325.0 820.0 L319.0 820.0ZM160.4 520.0h91.2v14.4h-91.2ZM420.1 520.0h67.8v14.4h-67.8ZM538.0 520.0 L586.0 520.0 L694.0 756.5 L802.0 520.0 L818.0 520.0 L681.0 820.0 L675.0 820.0ZM516.4 520.0h91.2v14.4h-91.2ZM776.1 520.0h67.8v14.4h-67.8Z" fill="currentColor"/></symbol>
+    <symbol id="camiseta" viewBox="0 0 200 200"><path fill="currentColor" d="M70 28 L50 34 L18 60 L34 88 L52 78 L52 178 L148 178 L148 78 L166 88 L182 60 L150 34 L130 28 C124 42 112 48 100 48 C88 48 76 42 70 28Z"/></symbol>
+    <symbol id="moletom" viewBox="0 0 200 200"><path fill="currentColor" d="M72 26 C80 40 90 46 100 46 C110 46 120 40 128 26 L152 34 L180 92 L182 168 L162 170 L156 104 L154 172 L46 172 L44 104 L38 170 L18 168 L20 92 L48 34Z"/></symbol>
+    <symbol id="calca" viewBox="0 0 200 200"><path fill="currentColor" d="M58 18 L142 18 L148 40 L156 184 L116 184 L102 70 L98 70 L84 184 L44 184 L52 40Z"/></symbol>
+    <symbol id="tenis" viewBox="0 0 200 200"><path fill="currentColor" d="M22 132 C22 112 30 96 44 92 C62 90 76 84 88 70 L104 66 C110 82 126 92 150 98 C170 104 182 112 182 128 L182 138 C182 144 178 148 172 148 L30 148 C25 148 22 144 22 138Z"/></symbol>
+  </defs>
+</svg>
+
+<div class="aviso faixa">Protótipo · Coleção I · Veni, lançamento em breve</div>
+
+<header class="topo faixa">
+  <div class="dentro">
+    <a class="marca" href="#inicio" aria-label="Veni Vidi Vici, início">
+      <svg class="ico" aria-hidden="true"><use href="#mono"/></svg>
+      <span>VVV</span>
+    </a>
+    <nav aria-label="Principal">
+      <ul class="menu">
+        <li><a href="#colecao">Coleção I</a></li>
+        <li><a href="#vitrine">Loja</a></li>
+        <li><a href="#vici">Edição Vici</a></li>
+        <li><a href="#marca">A marca</a></li>
+      </ul>
+    </nav>
+    <a class="sacola" id="sacola" href="#sacola" style="text-decoration:none">Sacola <b id="qtd">0</b></a>
+  </div>
+</header>
+
+<main id="inicio">
+  <section class="abertura faixa" aria-labelledby="titulo">
+    <div class="dentro">
+      <div>
+        <p class="rotulo" style="color:var(--dourado)">Coleção I · Veni</p>
+        <h1 id="titulo" style="margin-top:22px"><span>Veni</span><span>Vidi</span><span>Vici</span></h1>
+        <p class="latim">Vim, vi, venci.</p>
+        <p class="apoio">Roupas e tênis para quem chega preparado. Cortes limpos, poucas peças, a marca nos detalhes.</p>
+        <div class="acoes">
+          <a class="botao cheio" href="#vitrine">Ver a coleção</a>
+          <a class="botao vazio" href="#espera">Entrar na lista</a>
+        </div>
+      </div>
+      <div class="coroa-grande" aria-hidden="true">
+        <svg class="ico" viewBox="60 100 880 850"><path d="M587.1 849.3 A360 360 0 0 0 680.0 188.2" fill="none" stroke="currentColor" stroke-width="7"/><path d="M412.9 849.3 A360 360 0 0 1 320.0 188.2" fill="none" stroke="currentColor" stroke-width="7"/><path d="M669.0 817.9 C664.6 775.5 694.8 733.2 726.5 718.3 C729.5 753.2 707.9 800.5 669.0 817.9 ZM669.0 817.9 C705.2 795.3 756.4 803.9 783.7 825.9 C753.7 843.8 701.7 845.2 669.0 817.9 ZM744.4 764.4 C730.0 726.2 747.6 679.8 773.3 658.3 C784.5 689.8 776.1 738.8 744.4 764.4 ZM744.4 764.4 C772.3 734.7 821.8 730.2 852.4 743.8 C829.0 767.8 781.2 781.7 744.4 764.4 ZM803.6 693.4 C781.1 661.7 786.1 614.6 804.5 588.5 C822.6 614.9 826.7 662.1 803.6 693.4 ZM803.6 693.4 C822.2 659.3 866.8 643.1 898.3 648.3 C882.5 676.0 841.9 700.5 803.6 693.4 ZM842.9 609.8 C814.4 586.0 807.6 541.4 818.3 512.9 C841.3 532.9 856.5 575.4 842.9 609.8 ZM842.9 609.8 C851.7 573.8 888.8 548.1 919.1 545.2 C911.3 574.6 879.8 607.0 842.9 609.8 ZM859.5 518.8 C827.7 503.9 810.6 464.6 813.5 435.9 C839.4 448.6 863.7 483.9 859.5 518.8 ZM859.5 518.8 C858.9 483.7 886.8 451.1 913.9 441.1 C913.8 470.0 892.7 507.4 859.5 518.8 ZM852.5 426.7 C819.7 420.7 794.6 388.8 790.3 361.8 C817.1 367.2 847.9 393.7 852.5 426.7 ZM852.5 426.7 C843.5 394.6 861.1 358.1 883.6 342.4 C890.4 368.9 880.1 408.2 852.5 426.7 ZM822.2 339.4 C790.8 341.8 760.2 318.7 749.9 295.1 C775.6 293.6 810.1 310.4 822.2 339.4 ZM822.2 339.4 C806.3 312.3 813.6 274.6 830.3 254.9 C843.0 277.5 843.0 315.8 822.2 339.4 ZM770.7 262.6 C742.7 272.3 709.4 258.7 694.3 239.6 C717.4 232.1 752.7 239.1 770.7 262.6 ZM770.7 262.6 C749.7 241.8 747.3 205.8 757.8 183.9 C774.7 201.3 783.9 236.2 770.7 262.6 ZM701.3 201.5 C678.3 217.0 644.8 212.6 626.6 198.9 C645.7 186.6 679.5 184.5 701.3 201.5 ZM701.3 201.5 C677.3 187.7 666.6 155.6 670.9 133.3 C690.4 145.0 707.0 174.5 701.3 201.5 ZM669.0 182.1 C636.2 189.6 604.5 167.7 594.0 142.2 C621.0 136.7 656.8 150.7 669.0 182.1 ZM331.0 817.9 C292.1 800.5 270.5 753.2 273.5 718.3 C305.2 733.2 335.4 775.5 331.0 817.9 ZM331.0 817.9 C298.3 845.2 246.3 843.8 216.3 825.9 C243.6 803.9 294.8 795.3 331.0 817.9 ZM255.6 764.4 C223.9 738.8 215.5 689.8 226.7 658.3 C252.4 679.8 270.0 726.2 255.6 764.4 ZM255.6 764.4 C218.8 781.7 171.0 767.8 147.6 743.8 C178.2 730.2 227.7 734.7 255.6 764.4 ZM196.4 693.4 C173.3 662.1 177.4 614.9 195.5 588.5 C213.9 614.6 218.9 661.7 196.4 693.4 ZM196.4 693.4 C158.1 700.5 117.5 676.0 101.7 648.3 C133.2 643.1 177.8 659.3 196.4 693.4 ZM157.1 609.8 C143.5 575.4 158.7 532.9 181.7 512.9 C192.4 541.4 185.6 586.0 157.1 609.8 ZM157.1 609.8 C120.2 607.0 88.7 574.6 80.9 545.2 C111.2 548.1 148.3 573.8 157.1 609.8 ZM140.5 518.8 C136.3 483.9 160.6 448.6 186.5 435.9 C189.4 464.6 172.3 503.9 140.5 518.8 ZM140.5 518.8 C107.3 507.4 86.2 470.0 86.1 441.1 C113.2 451.1 141.1 483.7 140.5 518.8 ZM147.5 426.7 C152.1 393.7 182.9 367.2 209.7 361.8 C205.4 388.8 180.3 420.7 147.5 426.7 ZM147.5 426.7 C119.9 408.2 109.6 368.9 116.4 342.4 C138.9 358.1 156.5 394.6 147.5 426.7 ZM177.8 339.4 C189.9 310.4 224.4 293.6 250.1 295.1 C239.8 318.7 209.2 341.8 177.8 339.4 ZM177.8 339.4 C157.0 315.8 157.0 277.5 169.7 254.9 C186.4 274.6 193.7 312.3 177.8 339.4 ZM229.3 262.6 C247.3 239.1 282.6 232.1 305.7 239.6 C290.6 258.7 257.3 272.3 229.3 262.6 ZM229.3 262.6 C216.1 236.2 225.3 201.3 242.2 183.9 C252.7 205.8 250.3 241.8 229.3 262.6 ZM298.7 201.5 C320.5 184.5 354.3 186.6 373.4 198.9 C355.2 212.6 321.7 217.0 298.7 201.5 ZM298.7 201.5 C293.0 174.5 309.6 145.0 329.1 133.3 C333.4 155.6 322.7 187.7 298.7 201.5 ZM331.0 182.1 C343.2 150.7 379.0 136.7 406.0 142.2 C395.5 167.7 363.8 189.6 331.0 182.1 ZM500 868l22 22l-22 22l-22 -22Z" fill="currentColor"/><path d="M343.63000000000005 569.66 284.73 435.14H300.88000000000005L347.43000000000006 551.61ZM343.63000000000005 569.66 341.92 556.36 392.46000000000004 434.57H403.86L352.37 550.09Q352.37 550.09 351.32500000000005 552.465Q350.28000000000003 554.84 348.855 558.26Q347.43000000000006 561.68 346.38500000000005 564.91Q345.34000000000003 568.14 345.34000000000003 569.66ZM387.14000000000004 447.68Q389.23 441.98 386.38 438.94Q383.53000000000003 435.9 379.92 435.9H378.21000000000004V434.0H416.40000000000003V435.9Q416.40000000000003 435.9 415.5450000000001 435.9Q414.69000000000005 435.9 414.69000000000005 435.9Q410.51000000000005 435.9 405.76000000000005 438.655Q401.01000000000005 441.40999999999997 397.97 447.87ZM306.01000000000005 447.68 290.24 447.87Q287.39000000000004 441.40999999999997 282.64000000000004 438.655Q277.89000000000004 435.9 273.52000000000004 435.9Q273.52000000000004 435.9 272.76000000000005 435.9Q272.00000000000006 435.9 272.00000000000006 435.9V434.0H314.75000000000006V435.9H313.04Q309.43000000000006 435.9 306.67500000000007 438.94Q303.92 441.98 306.01000000000005 447.68ZM499.43000000000006 569.66 440.53000000000003 435.14H456.68000000000006L503.23 551.61ZM499.43000000000006 569.66 497.72 556.36 548.26 434.57H559.6600000000001L508.1700000000001 550.09Q508.1700000000001 550.09 507.12500000000006 552.465Q506.08000000000004 554.84 504.65500000000003 558.26Q503.23 561.68 502.18500000000006 564.91Q501.14000000000004 568.14 501.14000000000004 569.66ZM542.94 447.68Q545.0300000000001 441.98 542.1800000000001 438.94Q539.33 435.9 535.72 435.9H534.01V434.0H572.2V435.9Q572.2 435.9 571.345 435.9Q570.49 435.9 570.49 435.9Q566.3100000000001 435.9 561.5600000000001 438.655Q556.8100000000001 441.40999999999997 553.7700000000001 447.87ZM461.81000000000006 447.68 446.04 447.87Q443.19000000000005 441.40999999999997 438.44000000000005 438.655Q433.69000000000005 435.9 429.32000000000005 435.9Q429.32000000000005 435.9 428.56000000000006 435.9Q427.80000000000007 435.9 427.80000000000007 435.9V434.0H470.55000000000007V435.9H468.84000000000003Q465.23 435.9 462.475 438.94Q459.72 441.98 461.81000000000006 447.68ZM655.23 569.66 596.33 435.14H612.48L659.03 551.61ZM655.23 569.66 653.52 556.36 704.06 434.57H715.46L663.97 550.09Q663.97 550.09 662.925 552.465Q661.88 554.84 660.4549999999999 558.26Q659.03 561.68 657.985 564.91Q656.94 568.14 656.94 569.66ZM698.74 447.68Q700.83 441.98 697.98 438.94Q695.13 435.9 691.52 435.9H689.81V434.0H728.0V435.9Q728.0 435.9 727.145 435.9Q726.29 435.9 726.29 435.9Q722.11 435.9 717.36 438.655Q712.61 441.40999999999997 709.57 447.87ZM617.61 447.68 601.84 447.87Q598.99 441.40999999999997 594.24 438.655Q589.49 435.9 585.12 435.9Q585.12 435.9 584.36 435.9Q583.6 435.9 583.6 435.9V434.0H626.35V435.9H624.64Q621.03 435.9 618.275 438.94Q615.52 441.98 617.61 447.68Z" fill="currentColor"/></svg>
+      </div>
+    </div>
+  </section>
+
+  <section class="atos faixa clara" id="colecao" aria-labelledby="t-atos">
+    <div class="dentro">
+      <div class="cabeca">
+        <div>
+          <p class="rotulo" style="color:var(--dourado)">A frase em três coleções</p>
+          <h2 id="t-atos" style="margin-top:14px">Uma conquista por vez</h2>
+        </div>
+        <p>Cada coleção é uma palavra da frase de Júlio César. A primeira é a chegada da marca.</p>
+      </div>
+      <div class="lista-atos">
+        <article class="ato atual">
+          <span class="num">I</span>
+          <h3>Veni</h3>
+          <p class="trad">“Vim”</p>
+          <p class="desc">Os básicos de alto acabamento em preto, branco e areia. Dez peças de roupa e três tênis que combinam entre si.</p>
+          <p class="estado">Lançamento em breve</p>
+        </article>
+        <article class="ato">
+          <span class="num">II</span>
+          <h3>Vidi</h3>
+          <p class="trad">“Vi”</p>
+          <p class="desc">O olhar. As mesmas bases ganham recortes, texturas e mais detalhe de construção.</p>
+          <p class="estado">Próxima coleção</p>
+        </article>
+        <article class="ato">
+          <span class="num">III</span>
+          <h3>Vici</h3>
+          <p class="trad">“Venci”</p>
+          <p class="desc">A conquista. A linha mais sofisticada da marca, em preto e dourado.</p>
+          <p class="estado">Em seguida</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="vitrine faixa areia" id="vitrine" aria-labelledby="t-vitrine">
+    <div class="dentro">
+      <div class="cabeca">
+        <div>
+          <p class="rotulo">Coleção I · Veni</p>
+          <h2 id="t-vitrine" style="margin-top:14px">Peças da coleção</h2>
+        </div>
+        <p>De R$ 189 a R$ 1.190. Toque nas cores para ver cada versão.</p>
+      </div>
+      <div class="filtros" role="group" aria-label="Filtrar peças">
+        <button class="filtro" type="button" data-f="todas" aria-pressed="true">Todas</button>
+        <button class="filtro" type="button" data-f="roupa" aria-pressed="false">Roupas</button>
+        <button class="filtro" type="button" data-f="tenis" aria-pressed="false">Tênis</button>
+      </div>
+      <div class="grade" id="grade"></div>
+    </div>
+  </section>
+
+  <section class="edicao faixa" id="vici" aria-labelledby="t-vici">
+    <div class="dentro">
+      <div class="texto">
+        <p class="rotulo">Edição Vici</p>
+        <h2 id="t-vici">Três peças em <em>preto e dourado</em></h2>
+        <p>Dentro da Coleção I, três peças já antecipam a conquista. Monograma, zíper e ilhós dourados, em tiragem pequena.</p>
+        <div class="acoes"><a class="botao cheio" href="#espera">Avise-me no lançamento</a></div>
+      </div>
+      <ul class="trio">
+        <li>
+          <svg class="mono ico" aria-hidden="true"><use href="#mono"/></svg>
+          <h3>Aquila</h3>
+          <p>Moletom com capuz, 400 g/m². Coroa dourada nas costas.</p>
+          <span class="preco">R$ 549</span>
+        </li>
+        <li>
+          <svg class="mono ico" aria-hidden="true"><use href="#mono"/></svg>
+          <h3>Pretoriana</h3>
+          <p>Jaqueta harrington em sarja encerada, forro com a coroa.</p>
+          <span class="preco">R$ 1.190</span>
+        </li>
+        <li>
+          <svg class="mono ico" aria-hidden="true"><use href="#mono"/></svg>
+          <h3>Vici</h3>
+          <p>Tênis em couro napa, ilhós dourados, caixa preta com a coroa.</p>
+          <span class="preco">R$ 1.190</span>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="manifesto faixa clara" id="marca" aria-labelledby="t-marca">
+    <div class="dentro">
+      <svg class="mono ico" aria-hidden="true"><use href="#mono"/></svg>
+      <h2 id="t-marca" class="rotulo">A marca</h2>
+      <blockquote>Poucas peças boas valem mais que muitas peças da moda.</blockquote>
+      <p class="assina">A Veni Vidi Vici faz roupa para quem chega preparado: clássica, simples e bem feita. Nada grita. A conquista aparece no caimento, no tecido e num monograma pequeno no peito.</p>
+      <div class="principios">
+        <div><strong>Clássico</strong><span>Modelagens que não saem de moda.</span></div>
+        <div><strong>Simples</strong><span>Preto, branco e areia como base.</span></div>
+        <div><strong>Detalhe</strong><span>O dourado só onde importa.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="espera faixa" id="espera" aria-labelledby="t-espera">
+    <div class="dentro">
+      <div>
+        <h2 id="t-espera">Seja o primeiro a chegar</h2>
+        <p>Entre na lista e receba o aviso do lançamento da Coleção I antes de todo mundo.</p>
+      </div>
+      <div>
+        <form class="form" id="form-espera" novalidate>
+          <label for="email">Seu e-mail</label>
+          <input id="email" name="email" type="email" placeholder="seu@email.com" autocomplete="email" required>
+          <button class="botao cheio" type="submit">Quero o aviso</button>
+        </form>
+        <p class="retorno" id="retorno" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<section class="tela-sacola faixa" id="tela-sacola" aria-labelledby="t-sacola" hidden>
+  <div class="dentro">
+    <a class="voltar" href="#vitrine">← Continuar comprando</a>
+    <h1 id="t-sacola">Sua sacola</h1>
+    <p class="sub" id="sacola-sub"></p>
+    <ol class="passos" aria-label="Etapas da compra">
+      <li class="agora">Sacola</li><li>Entrega</li><li>Pagamento</li><li>Confirmação</li>
+    </ol>
+    <div class="sacola-grade" id="sacola-cheia">
+      <ul class="itens" id="itens"></ul>
+      <aside class="resumo" aria-labelledby="t-resumo">
+        <h2 id="t-resumo">Resumo do pedido</h2>
+        <div class="barra-frete" id="barra-frete">
+          <span id="frete-texto"></span>
+          <div class="trilho"><div class="cheio" id="frete-barra"></div></div>
+        </div>
+        <dl>
+          <div><dt>Subtotal</dt><dd id="r-sub"></dd></div>
+          <div><dt>Desconto</dt><dd id="r-desc"></dd></div>
+          <div><dt>Frete</dt><dd id="r-frete"></dd></div>
+          <div class="total"><dt>Total</dt><dd id="r-total"></dd></div>
+        </dl>
+        <p class="parcela" id="r-parcela"></p>
+        <form class="campo" id="form-cep" novalidate>
+          <label for="cep" class="rotulo" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">CEP</label>
+          <input id="cep" inputmode="numeric" placeholder="CEP para entrega" maxlength="9" autocomplete="postal-code">
+          <button type="submit">Calcular</button>
+        </form>
+        <form class="campo" id="form-cupom" novalidate>
+          <label for="cupom" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Cupom</label>
+          <input id="cupom" placeholder="Cupom de desconto" autocomplete="off">
+          <button type="submit">Aplicar</button>
+        </form>
+        <p class="nota" id="nota" aria-live="polite"></p>
+        <button class="botao cheio" type="button" id="finalizar">Finalizar compra</button>
+        <p class="seguro">Troca grátis em até 30 dias. Pix, cartão ou boleto.</p>
+      </aside>
+    </div>
+    <div class="vazia" id="sacola-vazia" hidden>
+      <svg class="mono ico" aria-hidden="true"><use href="#mono"/></svg>
+      <p>Sua sacola está vazia. Toda conquista começa com uma peça.</p>
+      <a class="botao vazio" href="#vitrine">Ver a Coleção I</a>
+    </div>
+    <div class="sugestoes">
+      <h2>Combina com o que você escolheu</h2>
+      <div class="grade" id="sugestoes"></div>
+    </div>
+  </div>
+</section>
+
+<div class="toast" id="toast" role="status" aria-live="polite"><span id="toast-texto"></span><a href="#sacola">Ver sacola</a></div>
+
+<footer class="rodape faixa">
+  <div class="dentro">
+    <div class="tipo-logo" aria-label="Veni Vidi Vici" role="img">
+      <svg class="ico" viewBox="-40 -10 1001.5 140" aria-hidden="true"><path d="M36.7 101.4 5.7 30.599999999999994H14.200000000000001L38.7 91.9ZM36.7 101.4 35.800000000000004 94.4 62.400000000000006 30.299999999999997H68.4L41.300000000000004 91.1Q41.300000000000004 91.1 40.75 92.35Q40.2 93.6 39.45 95.4Q38.7 97.2 38.150000000000006 98.9Q37.6 100.6 37.6 101.4ZM59.6 37.199999999999996Q60.7 34.2 59.2 32.6Q57.7 31.0 55.800000000000004 31.0H54.900000000000006V30.0H75.0V31.0Q75.0 31.0 74.55000000000001 31.0Q74.10000000000001 31.0 74.10000000000001 31.0Q71.9 31.0 69.4 32.449999999999996Q66.9 33.89999999999999 65.3 37.3ZM16.900000000000002 37.199999999999996 8.6 37.3Q7.1000000000000005 33.89999999999999 4.6000000000000005 32.449999999999996Q2.1 31.0 -0.2 31.0Q-0.2 31.0 -0.6 31.0Q-1.0 31.0 -1.0 31.0V30.0H21.5V31.0H20.6Q18.7 31.0 17.25 32.6Q15.8 34.2 16.900000000000002 37.199999999999996ZM108.2 30.0V100.0H101.7V30.0ZM135.2 96.9V100.0H107.9V96.9ZM130.9 64.0V67.0H107.9V64.0ZM135.2 30.0V33.099999999999994H107.9V30.0ZM141.3 83.8 135.5 100.0H118.9L122.5 96.9Q127.80000000000001 96.9 131.15 95.25Q134.5 93.6 136.6 90.6Q138.7 87.6 140.3 83.8ZM130.9 66.8V73.4H129.9V71.9Q129.9 69.9 128.5 68.45Q127.1 67.0 125.1 67.0V66.8ZM130.9 57.599999999999994V64.19999999999999H125.1V64.0Q127.1 63.9 128.5 62.45Q129.9 61.0 129.9 59.0V57.599999999999994ZM135.2 32.8V40.8H134.2V39.0Q134.2 36.599999999999994 132.5 34.849999999999994Q130.8 33.099999999999994 128.3 33.0V32.8ZM135.2 28.200000000000003V31.099999999999994L123.0 30.0Q125.2 30.0 127.65 29.699999999999996Q130.1 29.39999999999999 132.2 28.999999999999993Q134.3 28.599999999999994 135.2 28.200000000000003ZM102.0 92.7V100.0H94.0V99.0Q94.0 99.0 94.65 99.0Q95.3 99.0 95.3 99.0Q97.9 99.0 99.75 97.15Q101.6 95.3 101.7 92.7ZM102.0 37.3H101.7Q101.7 34.7 99.80000000000001 32.85Q97.9 31.0 95.3 31.0Q95.3 31.0 94.69999999999999 31.0Q94.1 31.0 94.1 31.0L94.0 30.0H102.0ZM172.29999999999998 28.5 230.39999999999998 90.5 231.3 101.4 173.2 39.5ZM172.5 92.9V100.0H164.2V99.0Q164.2 99.0 165.1 99.0Q166.0 99.0 166.1 99.0Q168.6 99.0 170.39999999999998 97.2Q172.2 95.4 172.2 92.9ZM176.79999999999998 92.9Q176.79999999999998 95.4 178.59999999999997 97.2Q180.39999999999998 99.0 182.89999999999998 99.0Q183.0 99.0 183.89999999999998 99.0Q184.79999999999998 99.0 184.79999999999998 99.0V100.0H176.5V92.9ZM172.29999999999998 28.5 176.7 34.099999999999994 176.79999999999998 100.0H172.2V41.0Q172.2 35.89999999999999 171.75 32.199999999999996Q171.29999999999998 28.5 171.29999999999998 28.5ZM231.3 30.0V88.6Q231.3 91.8 231.5 94.75Q231.7 97.7 231.95 99.55000000000001Q232.2 101.4 232.2 101.4H231.3L226.8 96.1V30.0ZM239.3 30.0V31.0Q239.3 31.0 238.4 31.0Q237.5 31.0 237.5 31.0Q235.0 31.0 233.2 32.75Q231.39999999999998 34.5 231.3 37.099999999999994H231.0V30.0ZM218.7 30.0H227.0V37.099999999999994H226.8Q226.7 34.5 224.95 32.75Q223.2 31.0 220.6 31.0Q220.6 31.0 219.7 31.0Q218.79999999999998 31.0 218.7 31.0ZM278.0 30.0V100.0H271.5V30.0ZM271.8 92.7V100.0H263.8V99.0Q263.8 99.0 264.45000000000005 99.0Q265.1 99.0 265.1 99.0Q267.7 99.0 269.55 97.15Q271.40000000000003 95.3 271.5 92.7ZM271.8 37.3H271.5Q271.40000000000003 34.7 269.55 32.85Q267.7 31.0 265.1 31.0Q265.1 31.0 264.45000000000005 31.0Q263.8 31.0 263.8 31.0V30.0H271.8ZM277.7 92.7H278.0Q278.1 95.3 279.95000000000005 97.15Q281.8 99.0 284.40000000000003 99.0Q284.40000000000003 99.0 285.0 99.0Q285.6 99.0 285.7 99.0V100.0H277.7ZM277.7 37.3V30.0H285.7V31.0Q285.6 31.0 285.0 31.0Q284.40000000000003 31.0 284.40000000000003 31.0Q281.8 31.0 279.95000000000005 32.85Q278.1 34.7 278.0 37.3ZM381.3 101.4 350.3 30.599999999999994H358.8L383.3 91.9ZM381.3 101.4 380.40000000000003 94.4 407.0 30.299999999999997H413.0L385.90000000000003 91.1Q385.90000000000003 91.1 385.35 92.35Q384.8 93.6 384.05 95.4Q383.3 97.2 382.75 98.9Q382.20000000000005 100.6 382.20000000000005 101.4ZM404.20000000000005 37.199999999999996Q405.3 34.2 403.8 32.6Q402.3 31.0 400.40000000000003 31.0H399.5V30.0H419.6V31.0Q419.6 31.0 419.15000000000003 31.0Q418.70000000000005 31.0 418.70000000000005 31.0Q416.5 31.0 414.0 32.449999999999996Q411.5 33.89999999999999 409.90000000000003 37.3ZM361.5 37.199999999999996 353.20000000000005 37.3Q351.70000000000005 33.89999999999999 349.20000000000005 32.449999999999996Q346.70000000000005 31.0 344.40000000000003 31.0Q344.40000000000003 31.0 344.0 31.0Q343.6 31.0 343.6 31.0V30.0H366.1V31.0H365.20000000000005Q363.3 31.0 361.85 32.6Q360.40000000000003 34.2 361.5 37.199999999999996ZM452.8 30.0V100.0H446.3V30.0ZM446.6 92.7V100.0H438.6V99.0Q438.6 99.0 439.25 99.0Q439.90000000000003 99.0 439.90000000000003 99.0Q442.5 99.0 444.35 97.15Q446.20000000000005 95.3 446.3 92.7ZM446.6 37.3H446.3Q446.20000000000005 34.7 444.35 32.85Q442.5 31.0 439.90000000000003 31.0Q439.90000000000003 31.0 439.25 31.0Q438.6 31.0 438.6 31.0V30.0H446.6ZM452.5 92.7H452.8Q452.90000000000003 95.3 454.75 97.15Q456.6 99.0 459.20000000000005 99.0Q459.20000000000005 99.0 459.80000000000007 99.0Q460.40000000000003 99.0 460.5 99.0V100.0H452.5ZM452.5 37.3V30.0H460.5V31.0Q460.40000000000003 31.0 459.80000000000007 31.0Q459.20000000000005 31.0 459.20000000000005 31.0Q456.6 31.0 454.75 32.85Q452.90000000000003 34.7 452.8 37.3ZM520.3000000000001 30.0Q531.0 30.0 539.05 34.349999999999994Q547.1 38.699999999999996 551.6500000000001 46.599999999999994Q556.2 54.5 556.2 65.0Q556.2 75.5 551.6500000000001 83.35Q547.1 91.2 539.05 95.6Q531.0 100.0 520.3000000000001 100.0H498.90000000000003L498.8 97.0Q498.8 97.0 500.95000000000005 97.0Q503.1 97.0 506.35 97.0Q509.6 97.0 512.8 97.0Q516.0 97.0 518.1500000000001 97.0Q520.3000000000001 97.0 520.3000000000001 97.0Q528.9000000000001 97.0 535.25 93.0Q541.6 89.0 545.1500000000001 81.8Q548.7 74.6 548.7 65.0Q548.7 55.4 545.1500000000001 48.2Q541.6 41.0 535.2 37.0Q528.8000000000001 33.0 520.3000000000001 33.0Q520.3000000000001 33.0 518.0500000000001 33.0Q515.8000000000001 33.0 512.45 33.0Q509.1 33.0 505.75 33.0Q502.40000000000003 33.0 500.1 33.0Q497.8 33.0 497.8 33.0V30.0ZM500.6 30.0V100.0H494.1V30.0ZM494.40000000000003 92.7V100.0H486.40000000000003V99.0Q486.40000000000003 99.0 487.05000000000007 99.0Q487.70000000000005 99.0 487.70000000000005 99.0Q490.3 99.0 492.15000000000003 97.15Q494.00000000000006 95.3 494.1 92.7ZM494.40000000000003 37.3H494.1Q494.1 34.7 492.20000000000005 32.85Q490.3 31.0 487.70000000000005 31.0Q487.70000000000005 31.0 487.1 31.0Q486.50000000000006 31.0 486.50000000000006 31.0L486.40000000000003 30.0H494.40000000000003ZM595.3000000000001 30.0V100.0H588.8000000000001V30.0ZM589.1 92.7V100.0H581.1V99.0Q581.1 99.0 581.75 99.0Q582.4 99.0 582.4 99.0Q585.0 99.0 586.85 97.15Q588.7 95.3 588.8000000000001 92.7ZM589.1 37.3H588.8000000000001Q588.7 34.7 586.85 32.85Q585.0 31.0 582.4 31.0Q582.4 31.0 581.75 31.0Q581.1 31.0 581.1 31.0V30.0H589.1ZM595.0 92.7H595.3000000000001Q595.4 95.3 597.25 97.15Q599.1 99.0 601.7 99.0Q601.7 99.0 602.3 99.0Q602.9 99.0 603.0 99.0V100.0H595.0ZM595.0 37.3V30.0H603.0V31.0Q602.9 31.0 602.3 31.0Q601.7 31.0 601.7 31.0Q599.1 31.0 597.25 32.85Q595.4 34.7 595.3000000000001 37.3ZM698.6 101.4 667.6 30.599999999999994H676.1L700.6 91.9ZM698.6 101.4 697.6999999999999 94.4 724.3 30.299999999999997H730.3L703.1999999999999 91.1Q703.1999999999999 91.1 702.65 92.35Q702.1 93.6 701.35 95.4Q700.6 97.2 700.05 98.9Q699.5 100.6 699.5 101.4ZM721.5 37.199999999999996Q722.6 34.2 721.1 32.6Q719.6 31.0 717.6999999999999 31.0H716.8V30.0H736.9V31.0Q736.9 31.0 736.45 31.0Q736.0 31.0 736.0 31.0Q733.8 31.0 731.3 32.449999999999996Q728.8 33.89999999999999 727.1999999999999 37.3ZM678.8 37.199999999999996 670.5 37.3Q669.0 33.89999999999999 666.5 32.449999999999996Q664.0 31.0 661.6999999999999 31.0Q661.6999999999999 31.0 661.3 31.0Q660.9 31.0 660.9 31.0V30.0H683.4V31.0H682.5Q680.6 31.0 679.15 32.6Q677.6999999999999 34.2 678.8 37.199999999999996ZM770.1 30.0V100.0H763.6V30.0ZM763.9 92.7V100.0H755.9V99.0Q755.9 99.0 756.55 99.0Q757.1999999999999 99.0 757.1999999999999 99.0Q759.8 99.0 761.65 97.15Q763.5 95.3 763.6 92.7ZM763.9 37.3H763.6Q763.5 34.7 761.65 32.85Q759.8 31.0 757.1999999999999 31.0Q757.1999999999999 31.0 756.55 31.0Q755.9 31.0 755.9 31.0V30.0H763.9ZM769.8 92.7H770.1Q770.1999999999999 95.3 772.05 97.15Q773.9 99.0 776.5 99.0Q776.5 99.0 777.0999999999999 99.0Q777.6999999999999 99.0 777.8 99.0V100.0H769.8ZM769.8 37.3V30.0H777.8V31.0Q777.6999999999999 31.0 777.0999999999999 31.0Q776.5 31.0 776.5 31.0Q773.9 31.0 772.05 32.85Q770.1999999999999 34.7 770.1 37.3ZM868.6999999999999 70.8 867.4999999999999 86.5Q864.9 90.8 860.9499999999999 94.15Q856.9999999999999 97.5 851.6499999999999 99.45Q846.3 101.4 839.4 101.4Q828.9999999999999 101.3 820.8999999999999 96.8Q812.8 92.3 808.25 84.15Q803.6999999999999 76.0 803.6999999999999 64.9Q803.6999999999999 54.0 808.1999999999999 45.849999999999994Q812.6999999999999 37.699999999999996 820.8499999999999 33.14999999999999Q828.9999999999999 28.599999999999994 839.9999999999999 28.599999999999994Q847.4 28.599999999999994 853.3499999999999 30.549999999999997Q859.3 32.5 863.6999999999999 35.39999999999999L865.6999999999999 49.5H864.8Q862.5999999999999 40.699999999999996 855.8 36.14999999999999Q848.9999999999999 31.599999999999994 839.9999999999999 31.599999999999994Q831.1999999999999 31.599999999999994 824.75 35.75Q818.3 39.9 814.75 47.349999999999994Q811.1999999999999 54.8 811.1999999999999 64.8Q811.1999999999999 74.8 814.75 82.3Q818.3 89.8 824.6499999999999 94.0Q830.9999999999999 98.2 839.4 98.4Q846.4999999999999 98.4 852.55 95.75Q858.5999999999999 93.1 862.6999999999999 87.05Q866.8 81.0 867.9 70.8ZM907.9 30.0V100.0H901.4V30.0ZM901.6999999999999 92.7V100.0H893.6999999999999V99.0Q893.6999999999999 99.0 894.3499999999999 99.0Q894.9999999999999 99.0 894.9999999999999 99.0Q897.5999999999999 99.0 899.4499999999999 97.15Q901.3 95.3 901.4 92.7ZM901.6999999999999 37.3H901.4Q901.3 34.7 899.4499999999999 32.85Q897.5999999999999 31.0 894.9999999999999 31.0Q894.9999999999999 31.0 894.3499999999999 31.0Q893.6999999999999 31.0 893.6999999999999 31.0V30.0H901.6999999999999ZM907.5999999999999 92.7H907.9Q907.9999999999999 95.3 909.8499999999999 97.15Q911.6999999999999 99.0 914.3 99.0Q914.3 99.0 914.8999999999999 99.0Q915.4999999999999 99.0 915.5999999999999 99.0V100.0H907.5999999999999ZM907.5999999999999 37.3V30.0H915.5999999999999V31.0Q915.4999999999999 31.0 914.8999999999999 31.0Q914.3 31.0 914.3 31.0Q911.6999999999999 31.0 909.8499999999999 32.85Q907.9999999999999 34.7 907.9 37.3Z" fill="currentColor"/></svg>
+    </div>
+    <div class="colunas">
+      <div><h4>Loja</h4><ul><li><a href="#vitrine">Roupas</a></li><li><a href="#vitrine">Tênis</a></li><li><a href="#vici">Edição Vici</a></li></ul></div>
+      <div><h4>Marca</h4><ul><li><a href="#marca">Sobre</a></li><li><a href="#colecao">Coleções</a></li></ul></div>
+      <div><h4>Ajuda</h4><ul><li>Trocas e devoluções</li><li>Guia de tamanhos</li><li>Entregas</li></ul></div>
+      <div><h4>Siga</h4><ul><li>Instagram</li><li>TikTok</li></ul></div>
+    </div>
+    <div class="base"><span>© 2026 Veni Vidi Vici</span><span>Protótipo da página inicial. Textos, preços e fotos são provisórios.</span></div>
+  </div>
+</footer>
+
+<script>
+const pecas = [
+  { id: "legio", nome: "Legio", tipo: "Camiseta básica", preco: 189, cat: "roupa", silh: "camiseta", cores: ["preto","branco","areia"], marca: [50, 30], vitrine: true },
+  { id: "tribuno", nome: "Tribuno", tipo: "Camiseta oversized", preco: 229, cat: "roupa", silh: "camiseta", cores: ["preto","branco"], marca: null, vitrine: true },
+  { id: "senado", nome: "Senado", tipo: "Polo", preco: 329, cat: "roupa", silh: "camiseta", cores: ["preto","branco","areia"], marca: [60, 30], vitrine: true },
+  { id: "forum", nome: "Fórum", tipo: "Camisa", preco: 449, cat: "roupa", silh: "camiseta", cores: ["branco","preto"], marca: null, vitrine: true },
+  { id: "centuria", nome: "Centúria", tipo: "Moletom careca", preco: 489, cat: "roupa", silh: "moletom", cores: ["preto","areia"], marca: [60, 32], vitrine: true },
+  { id: "via", nome: "Via", tipo: "Calça de sarja", preco: 469, cat: "roupa", silh: "calca", cores: ["preto","areia"], marca: null, vitrine: true },
+  { id: "veni", nome: "Veni", tipo: "Tênis court minimalista", preco: 899, cat: "tenis", silh: "tenis", cores: ["branco","preto"], marca: null, vitrine: true },
+  { id: "vidi", nome: "Vidi", tipo: "Tênis court com recortes", preco: 949, cat: "tenis", silh: "tenis", cores: ["branco","cinza"], marca: null, vitrine: true },
+  { id: "marte", nome: "Marte", tipo: "Bermuda de sarja", preco: 329, cat: "roupa", silh: "calca", cores: ["preto","areia"], marca: null },
+  { id: "laurel", nome: "Laurel", tipo: "Boné 6 gomos", preco: 199, cat: "acessorio", silh: "camiseta", cores: ["preto","branco"], marca: null },
+  { id: "aquila", nome: "Aquila", tipo: "Moletom com capuz", preco: 549, cat: "roupa", silh: "moletom", cores: ["preto"], marca: [60, 32], vici: true },
+  { id: "pretoriana", nome: "Pretoriana", tipo: "Jaqueta harrington", preco: 1190, cat: "roupa", silh: "moletom", cores: ["preto"], marca: [60, 32], vici: true },
+  { id: "vici", nome: "Vici", tipo: "Tênis court premium", preco: 1190, cat: "tenis", silh: "tenis", cores: ["preto"], marca: null, vici: true },
+];
+const porId = Object.fromEntries(pecas.map(p => [p.id, p]));
+const TAM = { roupa: ["PP","P","M","G","GG"], tenis: ["36","37","38","39","40","41","42","43","44"], acessorio: ["Único"] };
+const TAM_PADRAO = { roupa: "M", tenis: "41", acessorio: "Único" };
+const FRETE_GRATIS = 500, FRETE = 29.9, PARCELAS = 6, CUPOM = "VENI10";
+const brl = n => n.toLocaleString("pt-BR", { style: "currency", currency: "BRL", minimumFractionDigits: n % 1 ? 2 : 0 });
+const $ = id => document.getElementById(id);
+
+// Estado da sacola (exemplo inicial, guardado só neste navegador)
+let estado = { itens: [
+  { id: "legio", cor: "preto", tam: "M", qtd: 1 },
+  { id: "veni", cor: "branco", tam: "41", qtd: 1 },
+  { id: "aquila", cor: "preto", tam: "G", qtd: 1 },
+], cep: "", cupom: "" };
+try { const s = JSON.parse(localStorage.getItem("vvv-sacola")); if (s && Array.isArray(s.itens)) estado = s; } catch (e) {}
+const salvar = () => { try { localStorage.setItem("vvv-sacola", JSON.stringify(estado)); } catch (e) {} };
+
+function foto(p, cor, comSelo) {
+  const marca = p.marca ? `<svg class="marca-peca ico" style="left:${p.marca[0]}%;top:${p.marca[1]}%" aria-hidden="true"><use href="#mono"/></svg>` : "";
+  return `<div class="foto${p.vici ? " dourada" : ""}" data-cor="${cor}">
+      <svg class="silh ico" aria-hidden="true"><use href="#${p.silh}"/></svg>${marca}
+      ${comSelo ? '<span class="selo">Foto em breve</span>' : ""}
+      ${p.vici ? '<span class="vici">Vici</span>' : ""}
+    </div>`;
+}
+
+function cartao(p) {
+  const el = document.createElement("article");
+  el.className = "peca";
+  el.dataset.cat = p.cat;
+  let cor = p.cores[0];
+  el.innerHTML = `${foto(p, cor, true)}
+    <div class="linha1"><h3>${p.nome}</h3><span class="preco">${brl(p.preco)}</span></div>
+    <p class="tipo">${p.tipo}</p>
+    <div class="rodape-peca">
+      <div class="cores" role="group" aria-label="Cores de ${p.nome}">
+        ${p.cores.map((c, k) => `<button class="cor" type="button" data-c="${c}" aria-label="${c}" aria-pressed="${k === 0}"></button>`).join("")}
+      </div>
+      <button class="add" type="button">Adicionar</button>
+    </div>`;
+  el.querySelectorAll(".cor").forEach(b => b.addEventListener("click", () => {
+    cor = b.dataset.c;
+    el.querySelector(".foto").dataset.cor = cor;
+    el.querySelectorAll(".cor").forEach(o => o.setAttribute("aria-pressed", o === b));
+  }));
+  el.querySelector(".add").addEventListener("click", () => adicionar(p.id, cor));
+  return el;
+}
+
+const grade = $("grade");
+pecas.filter(p => p.vitrine).forEach(p => grade.appendChild(cartao(p)));
+
+document.querySelectorAll(".filtro").forEach(b => b.addEventListener("click", () => {
+  document.querySelectorAll(".filtro").forEach(o => o.setAttribute("aria-pressed", o === b));
+  const f = b.dataset.f;
+  grade.querySelectorAll(".peca").forEach(c => { c.hidden = !(f === "todas" || c.dataset.cat === f); });
+}));
+
+let timer;
+function adicionar(id, cor) {
+  const p = porId[id], tam = TAM_PADRAO[p.cat];
+  const ja = estado.itens.find(i => i.id === id && i.cor === cor && i.tam === tam);
+  if (ja) ja.qtd = Math.min(ja.qtd + 1, 9); else estado.itens.push({ id, cor, tam, qtd: 1 });
+  salvar(); render();
+  $("toast-texto").textContent = `${p.nome} (${cor}, ${tam}) foi para a sacola.`;
+  $("toast").classList.add("on");
+  clearTimeout(timer); timer = setTimeout(() => $("toast").classList.remove("on"), 3600);
+}
+
+function contas() {
+  const sub = estado.itens.reduce((s, i) => s + porId[i.id].preco * i.qtd, 0);
+  const desc = estado.cupom === CUPOM ? Math.round(sub * 0.10 * 100) / 100 : 0;
+  const base = sub - desc;
+  const cepOk = estado.cep.replace(/\D/g, "").length === 8;
+  const frete = base >= FRETE_GRATIS ? 0 : (cepOk ? FRETE : null);
+  return { sub, desc, base, frete, total: base + (frete || 0), cepOk };
+}
+
+function render() {
+  const n = estado.itens.reduce((s, i) => s + i.qtd, 0);
+  $("qtd").textContent = n;
+  $("sacola-sub").textContent = n ? `${n} ${n === 1 ? "peça" : "peças"} da Coleção I · Veni` : "";
+  $("sacola-cheia").hidden = !n;
+  $("sacola-vazia").hidden = !!n;
+
+  const ul = $("itens"); ul.innerHTML = "";
+  estado.itens.forEach((it, k) => {
+    const p = porId[it.id];
+    const li = document.createElement("li");
+    li.className = "item";
+    li.innerHTML = `${foto(p, it.cor, false)}
+      <div class="info">
+        ${p.vici ? '<span class="marca-vici">Edição Vici</span>' : ""}
+        <h3>${p.nome}</h3>
+        <p class="tipo">${p.tipo}</p>
+        <div class="opcoes">
+          <label>Cor <select data-k="cor" id="cor-${k}">${p.cores.map(c => `<option${c === it.cor ? " selected" : ""}>${c}</option>`).join("")}</select></label>
+          <label>Tamanho <select data-k="tam" id="tam-${k}">${TAM[p.cat].map(t => `<option${t === it.tam ? " selected" : ""}>${t}</option>`).join("")}</select></label>
+          <div class="qtd" role="group" aria-label="Quantidade de ${p.nome}">
+            <button type="button" data-d="-1" aria-label="Diminuir" ${it.qtd <= 1 ? "disabled" : ""}>−</button>
+            <output>${it.qtd}</output>
+            <button type="button" data-d="1" aria-label="Aumentar" ${it.qtd >= 9 ? "disabled" : ""}>+</button>
+          </div>
+        </div>
+      </div>
+      <div class="lado">
+        <span class="preco">${brl(p.preco * it.qtd)}</span>
+        <button class="remover" type="button">Remover</button>
+      </div>`;
+    li.querySelectorAll("select").forEach(s => s.addEventListener("change", () => { it[s.dataset.k] = s.value; salvar(); render(); }));
+    li.querySelectorAll(".qtd button").forEach(b => b.addEventListener("click", () => { it.qtd = Math.max(1, Math.min(9, it.qtd + +b.dataset.d)); salvar(); render(); }));
+    li.querySelector(".remover").addEventListener("click", () => { estado.itens.splice(k, 1); salvar(); render(); });
+    ul.appendChild(li);
+  });
+
+  const c = contas();
+  $("r-sub").textContent = brl(c.sub);
+  $("r-desc").textContent = c.desc ? "− " + brl(c.desc) : "—";
+  $("r-frete").textContent = c.frete === 0 ? "Grátis" : c.frete == null ? "Informe o CEP" : brl(c.frete);
+  $("r-total").textContent = brl(c.total);
+  $("r-parcela").textContent = `ou ${PARCELAS}x de ${brl(Math.round(c.total / PARCELAS * 100) / 100)} sem juros`;
+  const falta = FRETE_GRATIS - c.base;
+  $("frete-texto").textContent = falta > 0 ? `Faltam ${brl(falta)} para o frete grátis.` : "Seu pedido tem frete grátis.";
+  $("frete-barra").style.width = Math.min(100, c.base / FRETE_GRATIS * 100) + "%";
+  $("cep").value = estado.cep;
+  $("cupom").value = estado.cupom;
+
+  const naSacola = new Set(estado.itens.map(i => i.id));
+  const sug = $("sugestoes"); sug.innerHTML = "";
+  pecas.filter(p => !naSacola.has(p.id) && !p.vici).slice(0, 4).forEach(p => sug.appendChild(cartao(p)));
+}
+
+$("form-cep").addEventListener("submit", e => {
+  e.preventDefault();
+  const v = $("cep").value.replace(/\D/g, "");
+  if (v.length !== 8) { $("nota").textContent = "Digite os 8 números do CEP, como 01310-100."; return; }
+  estado.cep = v.slice(0, 5) + "-" + v.slice(5); salvar(); render();
+  const c = contas();
+  $("nota").textContent = c.frete === 0 ? `Entrega grátis para ${estado.cep}, em até 7 dias úteis.` : `Entrega para ${estado.cep} por ${brl(FRETE)}, em até 7 dias úteis.`;
+});
+$("form-cupom").addEventListener("submit", e => {
+  e.preventDefault();
+  const v = $("cupom").value.trim().toUpperCase();
+  if (v === CUPOM) { estado.cupom = v; salvar(); render(); $("nota").textContent = "Cupom VENI10 aplicado: 10% de desconto."; }
+  else { estado.cupom = ""; salvar(); render(); $("nota").textContent = v ? `O cupom ${v} não existe. Neste protótipo, teste VENI10.` : "Digite um cupom."; }
+});
+$("finalizar").addEventListener("click", () => {
+  $("nota").textContent = "Aqui o cliente seguiria para Entrega. Neste protótipo a compra para nesta tela.";
+});
+
+$("form-espera").addEventListener("submit", e => {
+  e.preventDefault();
+  const v = $("email").value.trim();
+  $("retorno").textContent = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)
+    ? "Anotado. Neste protótipo o e-mail não é enviado a lugar nenhum."
+    : "Digite um e-mail completo, como nome@email.com.";
+});
+
+// Navegação entre a página inicial e a sacola
+const telaInicial = document.querySelector("main"), telaSacola = $("tela-sacola");
+function rota() {
+  const h = location.hash.slice(1);
+  const naSacola = h === "sacola";
+  telaInicial.hidden = naSacola;
+  telaSacola.hidden = !naSacola;
+  $("toast").classList.remove("on");
+  if (naSacola) { window.scrollTo(0, 0); $("nota").textContent = ""; }
+  else if (h) { const alvo = document.getElementById(h); if (alvo) alvo.scrollIntoView(); }
+}
+window.addEventListener("hashchange", rota);
+render(); rota();
+
+</script>
